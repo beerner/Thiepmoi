@@ -37,10 +37,6 @@
         margin: 10px 0 20px;
         line-height: 1.6;
       }
-      .info a {
-        color: #2196f3;
-        text-decoration: none;
-      }
       .btn {
         background-color: #e91e63;
         color: white;
@@ -57,7 +53,6 @@
       iframe {
         width: 100%;
         max-width: 100%;
-        height: 700px;
         border: none;
         margin-top: 15px;
       }
@@ -69,6 +64,7 @@
       }
       #form-container {
         display: none;
+        position: relative;
       }
       .map-container {
         position: relative;
@@ -88,6 +84,12 @@
         z-index: 1;
         text-indent: -9999px;
       }
+      #confirmButtonContainer {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
       @media screen and (max-width: 600px) {
         body {
           font-size: 16px;
@@ -106,9 +108,9 @@
 
       <h1>🎉 Thiệp Mời Sinh Nhật 🎉</h1>
       <div class="info">
-        Mời bạn đến dự sinh nhật của <strong>Quý Anh</strong><br />
+        Mời bạn đến dự sinh nhật của <strong>Quí Anh</strong><br />
         📍 Địa điểm: Nhà hàng Biển Xanh, TP. Thái Nguyên<br />
-        🕕 Thời gian: 20h00 - Ngày 24/07/2025<br />
+        🕕 Thời gian: 18h00 - Ngày 24/07/2025<br />
         🎁 Rất mong được đón tiếp bạn!
       </div>
 
@@ -116,7 +118,7 @@
       <div class="map-container">
         <iframe
           src="https://maps.google.com/maps?q=21.586164,105.798366&hl=vi&z=17&output=embed"
-          allowfullscreen=""
+          allowfullscreen
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
         >
@@ -131,13 +133,19 @@
 
       <button class="btn" onclick="showForm()">Tôi sẽ tham gia</button>
 
+      <!-- Biểu mẫu -->
       <div id="form-container">
         <iframe
+          id="formFrame"
+          height="700"
           src="https://docs.google.com/forms/d/e/1FAIpQLSd4Rg2HSJRbi9jdVLFrPtFlMfKHNYQ6wSQvF6DL2SOhn5Pkdw/viewform?embedded=true"
         >
           Đang tải biểu mẫu…
         </iframe>
-        <button class="btn" onclick="confirmSent()">Tôi đã gửi form</button>
+
+        <div id="confirmButtonContainer">
+          <button class="btn" onclick="confirmSent()">Tôi đã gửi form</button>
+        </div>
       </div>
 
       <div id="thanks" class="thanks">
@@ -155,7 +163,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <script>
-      // Phát nhạc khi click đầu tiên
+      // Phát nhạc khi người dùng nhấp lần đầu
       window.addEventListener(
         "click",
         function () {
@@ -170,7 +178,9 @@
       );
 
       function showForm() {
-        document.getElementById("form-container").style.display = "block";
+        const form = document.getElementById("form-container");
+        form.style.display = "block";
+        form.scrollIntoView({ behavior: "smooth" });
       }
 
       function confirmSent() {
