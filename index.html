@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thiệp Mời Sinh Nhật</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background-color: #fff0f5;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        text-align: center;
+      }
+
+      .card {
+        max-width: 600px;
+        margin: 20px auto;
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn {
+        background-color: #e91e63;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 15px;
+        transition: transform 0.2s ease;
+      }
+
+      .btn:hover {
+        background-color: #d81b60;
+        transform: scale(1.05);
+      }
+
+      input[type="text"] {
+        padding: 10px;
+        border-radius: 8px;
+        border: 2px solid #e91e63;
+        width: 80%;
+        max-width: 300px;
+        text-align: center;
+        margin-bottom: 15px;
+      }
+
+      /* Giữ nguyên toàn bộ style gốc của bạn ở dưới đây */
+      .firefly-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+      }
+
+      .firefly {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: radial-gradient(circle, #ffffaa 40%, transparent 80%);
+        border-radius: 50%;
+        opacity: 0.8;
+        animation: blink 2s infinite alternate, float 20s linear infinite;
+      }
+
+      @keyframes blink {
+        0% {
+          opacity: 0.3;
+        }
+        100% {
+          opacity: 0.8;
+        }
+      }
+
+      @keyframes float {
+        0% {
+          transform: translate(0, 0);
+        }
+        25% {
+          transform: translate(var(--x1), var(--y1));
+        }
+        50% {
+          transform: translate(var(--x2), var(--y2));
+        }
+        75% {
+          transform: translate(var(--x3), var(--y3));
+        }
+        100% {
+          transform: translate(var(--x4), var(--y4));
+        }
+      }
+
+      .birthday-banner {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+        margin-bottom: 20px;
+        padding-top: 20px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .letter {
+        position: relative;
+        width: 36px;
+        height: 100px;
+        animation: sway 3s ease-in-out infinite alternate;
+      }
+
+      .string {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        width: 2px;
+        height: 40px;
+        background: #888;
+        transform: translateX(-50%);
+      }
+
+      .balloon {
+        width: 20px;
+        height: 20px;
+        background-color: #f06292;
+        border-radius: 50%;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        box-shadow: inset -2px -4px rgba(0, 0, 0, 0.2);
+      }
+
+      .letter span {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #f06292;
+        color: white;
+        padding: 5px 8px;
+        font-weight: bold;
+        border-radius: 5px;
+        font-size: 1.6rem;
+      }
+
+      .space {
+        width: 12px;
+      }
+
+      @keyframes sway {
+        0% {
+          transform: rotate(-4deg);
+        }
+        100% {
+          transform: rotate(4deg);
+        }
+      }
+
+      .card img {
+        width: 100%;
+        max-width: 350px;
+        border-radius: 12px;
+        margin: 20px auto;
+        display: block;
+        z-index: 1;
+        position: relative;
+      }
+
+      h1,
+      .countdown,
+      .info,
+      .btn,
+      .thanks,
+      #form-container,
+      .map-container {
+        position: relative;
+        z-index: 1;
+      }
+
+      h1 {
+        color: #e91e63;
+        font-size: 1.8em;
+      }
+
+      .countdown {
+        font-size: 1.2rem;
+        color: #d81b60;
+        margin: 10px 0 20px;
+      }
+
+      .info {
+        font-family: "Dancing Script", cursive;
+        font-size: 1.4rem;
+        margin: 10px 0 20px;
+        line-height: 1.6;
+        color: #b71c1c;
+      }
+
+      iframe {
+        width: 100%;
+        max-width: 100%;
+        border: none;
+        margin-top: 15px;
+      }
+
+      .thanks {
+        display: none;
+        font-size: 1.2rem;
+        color: green;
+        margin-top: 20px;
+      }
+
+      #form-container {
+        display: none;
+        margin-top: 20px;
+      }
+
+      #confirmButtonContainer {
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      .map-container {
+        position: relative;
+        margin: 20px 0;
+      }
+
+      .map-container iframe {
+        width: 100%;
+        height: 300px;
+        border-radius: 10px;
+      }
+
+      .map-container a {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        text-indent: -9999px;
+      }
+
+      @media screen and (max-width: 600px) {
+        .letter span {
+          font-size: 1.3rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- FORM NHẬP TÊN -->
+    <div id="namePrompt" style="text-align: center; padding: 50px">
+      <h2>🎈 Mời bạn nhập tên để nhận thiệp 🎈</h2>
+      <input type="text" id="guestNameInput" placeholder="Tên của bạn" />
+      <br />
+      <button class="btn" onclick="enterName()">Xem Thiệp Mời</button>
+    </div>
+
+    <!-- THIỆP (ẨN BAN ĐẦU) -->
+    <div class="card" id="inviteCard" style="display: none">
+      <div class="firefly-container" id="fireflyContainer"></div>
+
+      <div class="birthday-banner">
+        <div class="letter">
+          <div class="balloon"></div>
+          <div class="string"></div>
+          <span>H</span>
+        </div>
+        <div class="letter">
+          <div class="balloon"></div>
+          <div class="string"></div>
+          <span>A</span>
+        </div>
+        <div class="letter">
+          <div class="balloon"></div>
+          <div class="string"></div>
+          <span>P</span>
+        </div>
+        <div class="letter">
+          <div class="balloon"></div>
+          <div class="string"></div>
+          <span>P</span>
+        </div>
+        <div class="letter">
+          <div class="balloon"></div>
+          <div class="string"></div>
+          <span>Y</span>
+        </div>
+        <div class="letter space"></div>
+        <div class="letter">
+          <div class="balloon"></div>
+          <div class="string"></div>
+          <span>B</span>
+        </div>
+        <div class="letter">
+          <div class="balloon"></div>
+          <div class="string"></div>
+          <span>I</span>
+        </div>
+        <div class="letter">
+          <div class="balloon"></div>
+          <div class="string"></div>
+          <span>R</span>
+        </div>
+        <div class="letter">
+          <div class="balloon"></div>
+          <div class="string"></div>
+          <span>T</span>
+        </div>
+        <div class="letter">
+          <div class="balloon"></div>
+          <div class="string"></div>
+          <span>H</span>
+        </div>
+        <div class="letter">
+          <div class="balloon"></div>
+          <div class="string"></div>
+          <span>D</span>
+        </div>
+        <div class="letter">
+          <div class="balloon"></div>
+          <div class="string"></div>
+          <span>A</span>
+        </div>
+        <div class="letter">
+          <div class="balloon"></div>
+          <div class="string"></div>
+          <span>Y</span>
+        </div>
+      </div>
+
+      <img src="Anh.jpg" alt="Ảnh thiệp mời" />
+
+      <h1>🎉 Thiệp Mời Sinh Nhật 🎉</h1>
+      <div id="countdown" class="countdown"></div>
+
+      <div class="info" id="inviteInfo"></div>
+
+      <div class="map-container">
+        <iframe
+          src="https://maps.google.com/maps?q=21.586152,105.813347&hl=vi&z=17&output=embed"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+        <a
+          href="https://www.google.com/maps/dir/?api=1&destination=21.586152,105.813347"
+          target="_blank"
+          title="Chỉ đường đến địa điểm"
+          >Chỉ đường</a
+        >
+      </div>
+
+      <button class="btn" onclick="showForm()">Tôi sẽ tham gia</button>
+      <div id="form-container">
+        <iframe
+          id="formFrame"
+          height="700"
+          src="https://docs.google.com/forms/d/e/1FAIpQLSd4Rg2HSJRbi9jdVLFrPtFlMfKHNYQ6wSQvF6DL2SOhn5Pkdw/viewform?embedded=true"
+          >Đang tải biểu mẫu…</iframe
+        >
+        <div id="confirmButtonContainer">
+          <button class="btn" onclick="confirmSent()">Tôi đã gửi form</button>
+        </div>
+      </div>
+      <div id="thanks" class="thanks">
+        🎉 Cảm ơn bạn đã xác nhận! Hẹn gặp lại trong buổi tiệc nhé! 🎊
+      </div>
+    </div>
+
+    <audio id="myAudio" loop>
+      <source src="sinhnhat.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+      function enterName() {
+        const guestName = document
+          .getElementById("guestNameInput")
+          .value.trim();
+        if (!guestName) {
+          alert("Vui lòng nhập tên!");
+          return;
+        }
+        document.getElementById("namePrompt").style.display = "none";
+        document.getElementById("inviteCard").style.display = "block";
+        document.getElementById("inviteInfo").innerHTML = `
+          Mời <strong>${guestName}</strong> đến dự sinh nhật của <strong>Quý Anh</strong><br/>
+          📍 Địa điểm: Beer Chile<br/>
+          🕕 Thời gian: 20h00 - Ngày 24/07/2025<br/>
+          🎁 Rất mong được đón tiếp bạn!
+        `;
+        document
+          .getElementById("myAudio")
+          .play()
+          .catch(() => {});
+        updateCountdown();
+      }
+
+      window.addEventListener(
+        "click",
+        () => {
+          const audio = document.getElementById("myAudio");
+          if (audio.paused) audio.play().catch(() => {});
+        },
+        { once: true }
+      );
+
+      function showForm() {
+        document.getElementById("form-container").style.display = "block";
+        document
+          .getElementById("form-container")
+          .scrollIntoView({ behavior: "smooth" });
+      }
+
+      function confirmSent() {
+        document.getElementById("form-container").style.display = "none";
+        document.getElementById("thanks").style.display = "block";
+        confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+      }
+
+      const birthdayDate = new Date("2025-07-24T20:00:00").getTime();
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const dist = birthdayDate - now;
+        if (dist < 0) {
+          document.getElementById("countdown").innerHTML =
+            "🎂 Đã đến giờ tiệc sinh nhật!";
+          clearInterval(countdownInterval);
+          return;
+        }
+        const d = Math.floor(dist / (1000 * 60 * 60 * 24));
+        const h = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((dist % (1000 * 60)) / 1000);
+        document.getElementById(
+          "countdown"
+        ).innerHTML = `🕰️ Còn ${d} ngày ${h} giờ ${m} phút ${s} giây`;
+      }
+      let countdownInterval = setInterval(updateCountdown, 1000);
+      updateCountdown();
+
+      const container = document.getElementById("fireflyContainer");
+      for (let i = 0; i < 25; i++) {
+        const f = document.createElement("div");
+        f.classList.add("firefly");
+        f.style.top = Math.random() * 100 + "%";
+        f.style.left = Math.random() * 100 + "%";
+        f.style.setProperty("--x1", (Math.random() - 0.5) * 300 + "px");
+        f.style.setProperty("--y1", (Math.random() - 0.5) * 300 + "px");
+        f.style.setProperty("--x2", (Math.random() - 0.5) * 300 + "px");
+        f.style.setProperty("--y2", (Math.random() - 0.5) * 300 + "px");
+        f.style.setProperty("--x3", (Math.random() - 0.5) * 300 + "px");
+        f.style.setProperty("--y3", (Math.random() - 0.5) * 300 + "px");
+        f.style.setProperty("--x4", (Math.random() - 0.5) * 300 + "px");
+        f.style.setProperty("--y4", (Math.random() - 0.5) * 300 + "px");
+        f.style.animationDuration = 15 + Math.random() * 10 + "s";
+        container.appendChild(f);
+      }
+    </script>
+  </body>
+</html>
